@@ -5,4 +5,4 @@ __pycache__/
 .zipfile
 *.zip
 media/
-db.sqlite3
+*.sqlite3
