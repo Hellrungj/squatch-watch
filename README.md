@@ -29,7 +29,7 @@ To test the app's functionality, sample data is provided in the `sample` folder.
 
 ### Installation
 
-Note the python version for the project is 2.7, and this is saved in the `.python-version` file in the project root directory.
+Note the python version for the project is 3.5, and this is saved in the `.python-version` file in the project root directory.
 1. Create a project directory called `squatch_watch` and `cd` in to it
 2. Copy the `project.zip` file into `squatch_watch` and unzip it
 3. Create another directory in `squatch_watch` for dependencies by running `virtualenv venv`

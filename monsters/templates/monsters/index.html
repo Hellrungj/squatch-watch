@@ -1,0 +1,57 @@
+{% extends "monsters/layout.html" %}
+{% block content %}
+    <h1 style="text-align: center;">Squatch Reports</h1>
+    <h3 style="text-align: center;">Reports Total: {{report_num}}</h3>
+    {% if report_num <= 0 %}
+        <h4 style="text-align: center;">Sorry, no reports found! :(</h3>
+        <hr style="width: 80%">
+        <table class="table table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Monster(s)</th>
+                    <th scope="col">Researcher(s)</th>
+                </tr>
+            </thead>
+        </table> 
+    {% else %}
+    <hr style="width: 80%">
+        <table class="table table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Sightings</th>
+                    <th scope="col">Monster(s)</th>
+                    <th scope="col">Researcher(s)</th>
+                    <th scope="col">Download</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for report in reports%}
+                <tr >
+                    <td scope="row">{{report.id}}</td>
+                    <td>
+                        <a href="/report/{{report.id}}">
+                            {{report.title}}
+                        </a>
+                    </td>
+                    <td>{{report.sigthinglen}}</td>
+                    <td>
+                        {% for monster in report.monsters %}
+                            <a href="/search/monster/{{monster}}">{{monster}},</a> 
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {% for researcher in report.researchers %}
+                            <a href="/search/researcher/{{researcher}}">{{researcher}},</a>
+                        {% endfor %}
+                    </td>
+                    <td style="text-align: center; font-size: 32px;"><a href="{{report.path}}"><i class="fa fa-download"></i></a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %} 
+{% endblock%}

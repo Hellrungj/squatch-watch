@@ -1,0 +1,20 @@
+{% extends "monsters/layout.html" %}
+
+{% load static %}
+
+{% block content %}
+  <h1 style="text-align: center;">Upload CSV:</h1>
+  {% if message %}
+    <h3 style="text-align:center;"> {{message}}</h3>
+  {% endif %}
+  <hr style="width: 80%">
+  <form  style="text-align:center;" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input  type="file" name="myfile">
+    <button class="btn btn-primary" type="submit">Upload</button>
+  </form>
+
+  {% if uploaded_file_url %}
+    <p style="text-align:center;" >File uploaded at: <a href="{{ uploaded_file_url }}">{{ uploaded_file_url }}</a></p>
+  {% endif %}
+{% endblock %}

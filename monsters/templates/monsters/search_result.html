@@ -1,0 +1,59 @@
+{% extends "monsters/layout.html" %}
+{% block content %}
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">Squatch Reports</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Searched by {{query.type}}: {{query.content}}</li>
+    </ol>
+    </nav>
+    <h1 style="text-align: center;">{{query.type}}: {{query.content}}</h1>
+    <h3 style="text-align: center;">Search Results: {{result_num}}</h3>
+    {% if result_num <= 0 %}
+        <h4 style="text-align: center;">Sorry, no search results found! :(</h3>
+        <hr style="width: 80%">
+        <table class="table table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Monster(s)</th>
+                    <th scope="col">Researcher(s)</th>
+                </tr>
+            </thead>
+        </table> 
+    {% else %}
+        <hr style="width: 80%">
+        <table class="table table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Monster(s)</th>
+                    <th scope="col">Researcher(s)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for result in results %}
+                    <tr >
+                        <th scope="row">{{result.id}}</th>
+                        <td>
+                            <a href=/report/sighting/{{result.id}}>{{result.title}}</a>
+                        </td>
+                        <td>
+                            {% for monster in result.monsters %}
+                                <a href="/search/monster/{{monster}}">{{monster}},</a> 
+                            {% endfor %}
+                        </td>
+                        <td>
+                            {% for researcher in result.researchers %}
+                                <a href="/search/researcher/{{researcher}}">{{researcher}},</a>
+                            {% endfor %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            
+            </tbody>
+        </table> 
+    {% endif %}    
+{% endblock%}

@@ -1,0 +1,42 @@
+{% extends "monsters/layout.html" %}
+{% block content %}
+    <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">Squatch Reports</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Report: #{{report.id}} - {{report.title}}</li>
+    </ol>
+    </nav>
+    <h1 style="text-align: center;">Report: {{report.title}}</h1>
+    <h3 style="text-align: center;">Sightings Total: {{sighting_size}}</h3>
+    <hr style="width: 80%">
+    <table class="table table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Monster(s)</th>
+                    <th scope="col">Researcher(s)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for sight in sighting %}
+                <tr >
+                    <th scope="row">{{sight.id}}</th>
+                    <td>
+                        <a href=/report/sighting/{{sight.id}}>{{sight.title}}</a>
+                    </td>
+                    <td>
+                        {% for monster in sight.monsters %}
+                            <a href="/search/monster/{{monster}}">{{monster}},</a> 
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {% for researcher in sight.researchers %}
+                            <a href="/search/researcher/{{researcher}}">{{researcher}},</a>
+                        {% endfor %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table> 
+{% endblock%}

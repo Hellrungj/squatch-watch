@@ -1,0 +1,55 @@
+{% extends "monsters/layout.html" %}
+
+{% block content %}
+    <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">Squatch Reports</a></li>
+        <li class="breadcrumb-item"><a href="/report/{{report_id}}">Report: #{{report_id}} - {{report_title}}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Sighting: #{{sighting.id}} - {{sighting.title}}</li>
+    </ol>
+    </nav>
+    <h1 style="text-align: center;">Sighting: {{sighting.title}}</h1>
+    <hr style="width: 80%">
+    <table class="table table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th></th>
+                <th></th>
+                <th>Monster(s)</th>
+                <th>Researcher(s)</th>
+                <th>Timestamp</th> 
+                <th>Latitude</th>
+                <th>Longitude</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td></td>
+                <td></td>
+                <td>
+                    {% for monster in monsters %}
+                        <a href="/search/monster/{{monster}}">{{monster}},</a> 
+                    {% endfor %}
+                </td>
+                <td>
+                    {% for researcher in researchers %}
+                        <a href="/search/researcher/{{researcher}}">{{researcher}},</a>
+                    {% endfor %}
+                </td>
+                <td>{{sighting.timestamp}}</td>
+                <td>{{sighting.latitude}}</td>
+                <td>{{sighting.longitude}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <hr style="width: 80%">
+    {% load mathfilters %}
+    <div style="text-align: center;">
+        {% if sighting.id != 1 %}      
+            <a class="btn btn-primary" href="/report/sighting/{{sighting.id|sub:"1"}}"> Back </a>
+        {% endif %}
+        {% if sighting.id < len %}
+            <a class="btn btn-primary" href="/report/sighting/{{sighting.id|add:"1"}}"> Next </a>
+        {% endif %}
+    </div>
+{% endblock%}
