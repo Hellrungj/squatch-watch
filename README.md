@@ -34,5 +34,5 @@ Note the python version for the project is 3.5, and this is saved in the `.pytho
 2. Copy the `project.zip` file into `squatch_watch` and unzip it
 3. Create another directory in `squatch_watch` for dependencies by running `virtualenv venv`
 4. Activate the virtual environment with `source venv/bin/activate`
-5. Install dependencies with `pip install -r requirements.txt`
-6. Run the development server with `python manage.py runserver`
+5. Install dependencies with `pip3 install -r requirements.txt`
+6. Run the development server with `python3 manage.py runserver`
