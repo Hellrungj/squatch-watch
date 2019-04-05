@@ -4,11 +4,11 @@
 
 {% block content %}
   <h1 style="text-align: center;">Upload CSV:</h1>
-  {% if message %}
-    <h3 style="text-align:center;"> {{message}}</h3>
+  {% if not message == "" %}
+    <h3 style="text-align:center;">{{message}}</h3>
   {% endif %}
   <hr style="width: 80%">
-  <form  style="text-align:center;" method="post" enctype="multipart/form-data">
+  <form  style="text-align:center;" method="post" enctype="multipart/form-data" type="file" accept=".csv" >
     {% csrf_token %}
     <input  type="file" name="myfile">
     <button class="btn btn-primary" type="submit">Upload</button>

@@ -3,6 +3,9 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.core.files.storage import FileSystemStorage
 from django.db.models import Count
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+from django.utils.html import strip_tags
 
 import csv
 
@@ -15,6 +18,7 @@ from .models import MonsterReport
 # Helper Functions
 
 # Upload Helper
+@login_required(login_url='/accounts/login')
 def csv_uploader(myfile):
     # File upload #
     fs = FileSystemStorage() #Creates a insince of the FileSystemStorage class
@@ -96,7 +100,8 @@ def index(request):
 
     context = {
         "reports": reports_list,
-        "report_num": report_counter
+        "report_num": report_counter,
+        "user": request.user
     }
 
     return render(request, 'monsters/index.html', context)
@@ -169,6 +174,7 @@ def sighting_details(request, id):
         return redirect('/')
 
 # Upload sections ( '/report/upload/':upload.html )
+@login_required(login_url='/accounts/login')
 def upload_csv(request):
     """ 
     Uploads file to media folder and then readers the data from the uploaded file then inputs the file data into the database
@@ -177,17 +183,19 @@ def upload_csv(request):
     message = ""
     if request.method == 'POST':
         try:
-            if request.FILES['myfile']:
+            if strip_tags(request.FILES['myfile']):
                 try:
-                    myfile = request.FILES['myfile'] #Grabs the file
-                    try:
-                        message = csv_uploader(myfile)
-                        return redirect('/')
-                    except:
-                        message = "ERROR: No File Data uploaded"
+                    myfile = strip_tags(request.FILES['myfile']) #Grabs the file
+                    if myfile.name.split('.').pop(1) != "csv":
+                        raise AssertionError("Wrong filetype")
+                    else: 
+                        try:
+                            message = csv_uploader(myfile)
+                            return redirect('/')
+                        except:
+                            message = "ERROR: No File Data uploaded"
                 except:
-                    message = "ERROR: No File uploaded"
-            
+                    message = "ERROR: No File uploaded - Wrong filetype"
         except:
             message = "ERROR: No file request found"
     context = {
@@ -307,3 +315,19 @@ def search_sighting_id(request, id):
 def search_report_id(request, id):
     """ search by report id and redirect to report with report id """
     return redirect('/report/{}'.format(id))
+
+def login_view(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('/')
+        else:
+            return render(request, 'monsters/login.html')
+    return render(request, 'monsters/login.html')
+
+def logout_view(request):
+    logout(request)
+    return redirect('/')
