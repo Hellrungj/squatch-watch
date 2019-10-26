@@ -27,6 +27,7 @@ When a file is submitted, it creates objects that correspond with the applicatio
 
 To test the app's functionality, sample data is provided in the `sample` folder.
 
+#### DQ Schema
 ![DB Schema](https://github.com/Hellrungj/squatch-watch/blob/master/Squatch%20Watch%20DB.png)
 
 ### Installation
