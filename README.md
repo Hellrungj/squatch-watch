@@ -27,6 +27,8 @@ When a file is submitted, it creates objects that correspond with the applicatio
 
 To test the app's functionality, sample data is provided in the `sample` folder.
 
+![DB Schema](https://github.com/Hellrungj/squatch-watch/blob/master/Squatch%20Watch%20DB.png)
+
 ### Installation
 
 Note the python version for the project is 3.5, and this is saved in the `.python-version` file in the project root directory.
