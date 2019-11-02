@@ -34,7 +34,8 @@ To test the app's functionality, sample data is provided in the `sample` folder.
 
 Note the python version for the project is 3.8, and this is saved in the `.python-version` file in the project root directory.
 
-1. Install pip install pipenv
-2. Activate the virtual environment with `pipenv shell`
-3. Migrate the data `python manage.py migrate`
-4. Run the development server with `python manage.py runserver` then open a brower at [http://127.0.0.1:8080](http://127.0.0.1:8080)
+1. Install pipenv: `pip install pipenv`
+2. Activate the virtual environment: `pipenv shell`
+3. Migrate the data: `python manage.py migrate`
+4. Run the development server: `python manage.py runserver`
+5. Open a brower at [http://127.0.0.1:8080](http://127.0.0.1:8080)
