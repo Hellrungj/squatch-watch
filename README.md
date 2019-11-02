@@ -32,10 +32,9 @@ To test the app's functionality, sample data is provided in the `sample` folder.
 
 ### Installation
 
-Note the python version for the project is 3.5, and this is saved in the `.python-version` file in the project root directory.
-1. Create a project directory called `squatch_watch` and `cd` in to it
-2. Copy the `project.zip` file into `squatch_watch` and unzip it
-3. Create another directory in `squatch_watch` for dependencies by running `virtualenv venv`
-4. Activate the virtual environment with `source venv/bin/activate`
-5. Install dependencies with `pip3 install -r requirements.txt`
-6. Run the development server with `python3 manage.py runserver`
+Note the python version for the project is 3.8, and this is saved in the `.python-version` file in the project root directory.
+
+1. Install pip install pipenv
+2. Activate the virtual environment with `pipenv shell`
+3. Migrate the data `python manage.py migrate`
+4. Run the development server with `python manage.py runserver` then open a brower at [http://127.0.0.1:8080](http://127.0.0.1:8080)
