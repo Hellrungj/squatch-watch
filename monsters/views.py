@@ -223,28 +223,27 @@ def upload_csv(request):
     message = ""
     logging.debug("Request method type: {method}".format(method=request.method))
     if request.method == 'POST':
-        #try:
-        logging.debug("Tries to grab file")
-        #if strip_tags(request.FILES['myfile']):
-        #        try:
-        myfile = request.FILES['myfile'] #Grabs the file
-        print(myfile )
-        logging.debug("Grabs the files: {file} and strip tags".format(file=myfile))
-        #if myfile.split('.').pop(1) != "csv":
-        #    raise AssertionError("Wrong filetype")
-        #else: 
-    #                try:
-        message = csv_uploader(myfile)
-        return redirect('/')
-        #                except Exception as e:
-        #                    logging.warning("File data upload error: {e}".format(e))
-        #                    message = "ERROR: No File Data uploaded"
-        #        except Exception as e:
-        #            logging.warning("File upload error: {e}".format(e))
-        #            message = "ERROR: No File uploaded - Wrong filetype {}".format(e)
-        #except Exception as e:
-        #    logging.warning("File request error: {e}".format(e))
-        #    message = "ERROR: No file request found"
+        try:
+            logging.debug("Tries to grab file")
+            if strip_tags(request.FILES['myfile']):
+                try:
+                    myfile = request.FILES['myfile'] #Grabs the file
+                    logging.debug("Grabs the files: {file} and strip tags".format(file=myfile))
+                    if str(myfile).split('.').pop(1) != "csv":
+                        raise AssertionError("Wrong filetype")
+                    else: 
+                        try:
+                            message = csv_uploader(myfile)
+                            return redirect('/')
+                        except Exception as e:
+                            logging.warning("File data upload error: {0}".format(e))
+                            message = "ERROR: No File Data uploaded"
+                except Exception as e:
+                    logging.warning("File upload error: {0}".format(e))
+                    message = "ERROR: No File uploaded - Wrong filetype {0}".format(e)
+        except Exception as e:
+            logging.warning("File request error: {0}".format(e))
+            message = "ERROR: No file request found"
     context = {
         'message': message,
     }
