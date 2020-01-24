@@ -12,6 +12,7 @@ django-mathfilters = "*"
 django-crispy-forms = "*"
 django-import-export = "*"
 whitenoise = "*"
+django-heroku = "*"
 
 [requires]
 python_version = "3.8"

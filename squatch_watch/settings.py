@@ -13,18 +13,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 import os
 
 import logging
-#import sentry_sdk
-#from sentry_sdk.integrations.logging import LoggingIntegration
-
-# All of this is already happening by default!
-#sentry_logging = LoggingIntegration(
-#    level=logging.INFO,        # Capture info and above as breadcrumbs
-#    event_level=logging.ERROR  # Send errors as events
-#)
-#sentry_sdk.init(
-#    dsn="https://e09a6aa1f60946c68f27650a83fcc473@sentry.io/1433255",
-#    integrations=[sentry_logging]
-#)
+import django_heroku
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -141,7 +130,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'media/files/'),
+    os.path.join(BASE_DIR, 'static/'),
 )
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
