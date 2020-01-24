@@ -155,3 +155,5 @@ EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
 EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")
 
 IMPORT_EXPORT_USE_TRANSACTIONS = True
+
+django_heroku.settings(locals())
