@@ -9,7 +9,6 @@ https://docs.djangoproject.com/en/2.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.0/ref/settings/
 """
-
 import os
 
 import logging
@@ -18,7 +17,6 @@ import django_heroku
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
@@ -26,24 +24,31 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '%q^vd^^-ymab0_cr3*98_*x5$4k#5bgvu*qyp8g@f8rq@ipw5&'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+ENV_STAGE = "DEV"
+#ENV_STAGE = "QA"
+#ENV_STAGE = "PROD"
 
+if ENV_STAGE == "DEV":
+    DEBUG = True
+POSTGRES_DB = True
 ALLOWED_HOSTS = ['*']
-
 
 # Application definition
 
 INSTALLED_APPS = [
-    'monsters',
-    'mathfilters',
-    'crispy_forms',
-    'import_export',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'monsters',
+    'accounts',
+    'api',
+    'mathfilters',
+    'crispy_forms',
+    'import_export',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -54,7 +59,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    #'whitenoise.middleware.WhiteNoiseMiddleware', Deployment
 ]
 
 ROOT_URLCONF = 'squatch_watch.urls'
@@ -77,16 +82,26 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'squatch_watch.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+if POSTGRES_DB:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'squatch_watch_db',
+            'USER': 'postgres',
+            'PASSWORD': 'Squatch_Admin22!',
+            'HOST': 'localhost',
+            'POST': '5432',
+        }
     }
-}
+else:    
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
+    }
 
 
 # Password validation
@@ -107,21 +122,22 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
-
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_L10N = True
-
 #USE_TZ = True
 USE_TZ = False
 
+# -------------------------------------------------------------------------
+IMPORT_EXPORT_USE_TRANSACTIONS = True 
+# Info about IMPORT_EXPORT_USE_TRANSACTIONS 
+#https://simpleisbetterthancomplex.com/packages/2016/08/11/django-import-export.html
+# -----------------------------------------------------------------------------------
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4' # BootStrap Templates
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
@@ -129,25 +145,21 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
 
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
-)
+# Deployment use -------------------------------------------------------------
+if ENV_STAGE != "DEV":
+    STATICFILES_DIRS = (
+        os.path.join(BASE_DIR, 'static'),
+    )
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
+# For Monster Images 
+MEDIA_ROOT = BASE_DIR
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, '/media/')
 
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
-
+# Emails 
 EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
-EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")
-
-IMPORT_EXPORT_USE_TRANSACTIONS = True
-
-# Test File Paths
-os.makedirs(STATIC_ROOT, exist_ok=True)
-os.makedirs(MEDIA_ROOT, exist_ok=True)
-os.makedirs(EMAIL_FILE_PATH, exist_ok=True)
+EMAIL_ROOT = BASE_DIR
+EMAIL_URL = '/emails/'
 
 django_heroku.settings(locals())

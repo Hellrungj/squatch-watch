@@ -1,10 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import Researcher
-from .models import Monster
-from .models import Sighting
-from .models import MonsterReport
+from .models import Researcher, Monster, Sighting, MonsterReport
 
 admin.site.register(Researcher)
 admin.site.register(Monster)

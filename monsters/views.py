@@ -1,7 +1,7 @@
 # pylint: disable=no-member
 
 from django.shortcuts import render, reverse, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.core.files.storage import FileSystemStorage
 from django.contrib.auth.forms import UserCreationForm
@@ -9,6 +9,7 @@ from django.db.models import Count
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.utils.html import strip_tags
+
 import csv
 
 import logging
@@ -167,7 +168,7 @@ def report_details(request, id):
         return render(request, 'monsters/report_details.html', context)
     except Exception as e:
         # Future spot for logging failures
-        logging.error("Index page failed: {e}".format(e))
+        logging.error("Index page failed: {0}".format(e))
         logging.info("Redirect to root")
         return redirect('/')
 
@@ -210,7 +211,7 @@ def sighting_details(request, id):
         return render(request, 'monsters/sighting_details.html', context)
     except Exception as e:
         # Future spot for logging failures
-        logging.error("Index page failed: {e}".format(e))
+        logging.error("Index page failed: {0}".format(e))
         logging.info("Redirect to root")
         return redirect('/')
 
@@ -368,45 +369,44 @@ def search_report_title(request, title):
 
 def search_sighting_id(request, id):
     """ search by sighting id and redirect to sighting with sighting id """
-    logging.debug("Current request: {request}, id: {id}".format(request=request,id=id))
-    return redirect('/report/sighting/{}'.format(id))
+    try:
+        logging.debug("Current request: {request}, id: {id}".format(request=request,id=id))
+        id = Sighting.objects.get(pk=id)
+        return redirect('/report/sighting/{}'.format(id))
+    except Exception as e:
+        # Future spot for logging failures
+        logging.error("search_sighting_id failed: {0}".format(e))
+        logging.info("Redirect to root")
+        return redirect('/')
 
 def search_report_id(request, id):
     """ search by report id and redirect to report with report id """
-    logging.debug("Current request: {request}, id: {id}".format(request=request,id=id))
-    return redirect('/report/{}'.format(id))
+    try:
+        logging.debug("Current request: {request}, id: {id}".format(request=request,id=id))
+        id = MonsterReport.objects.get(pk=id)
+        return redirect('/report/{}'.format(id))
+    except Exception as e:
+        # Future spot for logging failures
+        logging.error("search_report_id failed: {0}".format(e))
+        logging.info("Redirect to root")
+        return redirect('/')
 
-def login_view(request):
-    logging.debug("Request method type: {method}".format(method=request.method))
-    if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            login(request, user)
-            logging.info("Redirect to root")
-            return redirect('/')
-        else:
-            logging.info("Render login view")
-            return render(request, 'monsters/login.html')
-    logging.info("Render login view")
-    return render(request, 'monsters/login.html')
+# def csvimport(file):
+#     fpath = file.url
+#     #THIS IS DONE BECAUSE file.url gives a 
+#     #path which has forward slashes
+#     #and system I am using is windows
+#     #and it's directory uses backward slash
+#     if(BASE_DIR.find('\\')==1):
+#         fpath = fpath.replace('/','\\')
+#     #REMOVE ABOVE LINE IF YOU ARE WORKING IN LINUX
 
-def logout_view(request):
-    logout(request)
-    logging.info("Redirect to root")
-    return redirect('/')
-
-def signup_view(request):
-    if request.method == 'POST':
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            username = form.cleaned_data.get('username')
-            raw_password = form.cleaned_data.get('password1')
-            user = authenticate(username=username, password=raw_password)
-            login(request, user)
-            return redirect('/')
-    else:
-        form = UserCreationForm()
-    return render(request, 'monsters/signup.html', {'form': form})
+#     path = BASE_DIR + fpath
+#     f = open(path,'rt')
+#     reader = csv.reader(f)
+#     for row in reader:
+#         _, created = Teacher.objects.get_or_create(
+#         first_name=row[0],
+#         last_name=row[1],
+#         middle_name=row[2],
+#         )

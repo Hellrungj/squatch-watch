@@ -13,6 +13,11 @@ django-crispy-forms = "*"
 django-import-export = "*"
 whitenoise = "*"
 django-heroku = "*"
+pillow = "*"
+psycopg2 = "*"
+djangorestframework = "*"
+markdown = "*"
+django-filter = "*"
 
 [requires]
-python_version = "3.8"
+python_version = "*"
