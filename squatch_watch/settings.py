@@ -157,6 +157,10 @@ if ENV_STAGE != "DEV":
 MEDIA_ROOT = BASE_DIR
 MEDIA_URL = '/media/'
 
+MEDIA_REPORT_URL = '/media/monsters/reports/'
+MEDIA_MONSTER_IMAGE_URL = '/media/monsters/images/'
+MEDIA_ACCOUNT_IMAGE_URL = '/media/account/images/'
+
 # Emails 
 EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
 EMAIL_ROOT = BASE_DIR
