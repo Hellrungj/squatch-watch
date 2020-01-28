@@ -31,3 +31,9 @@ urlpatterns += static(settings.MEDIA_REPORT_URL, document_root=settings.MEDIA_RO
 urlpatterns += static(settings.MEDIA_MONSTER_IMAGE_URL, document_root=settings.MEDIA_ROOT)
 urlpatterns += static(settings.MEDIA_ACCOUNT_IMAGE_URL, document_root=settings.MEDIA_ROOT)
 urlpatterns += static(settings.EMAIL_URL, document_root=settings.EMAIL_ROOT)
+
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns = [
+        path('__debug__/', include(debug_toolbar.urls)),
+    ] + urlpatterns

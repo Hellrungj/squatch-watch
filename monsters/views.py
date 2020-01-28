@@ -38,6 +38,10 @@ def sighting_details(request, id):
 def upload_csv(request):
     return (HttpResponse("Hello, world!"))
 
+def test_debuger(redirect):
+    logger.debug("Hello, world!")
+    return (HttpResponse("Hello, world!")) 
+
 # Seaching Functions ('/search/researcher/<name>':search_researcher, 
 #                     '/search/monster/<name>':search_monster,
 #                     '/search/sighting/<title>':search_sighting, 
