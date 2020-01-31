@@ -1,4 +1,4 @@
-{% extends "monsters/layout.html" %}
+{% extends "monsters/base.html" %}
 {% block content %}
     <h1 style="text-align: center;">Squatch Reports</h1>
     <h3 style="text-align: center;">Reports Total: {{report_num}}</h3>
@@ -48,7 +48,7 @@
                             <a href="/search/researcher/{{researcher}}">{{researcher}},</a>
                         {% endfor %}
                     </td>
-                    <td style="text-align: center; font-size: 32px;">{% load staticfiles %}<a href="{{report.path}}" ><i class="fa fa-download"></i></a></td>
+                    <td style="text-align: center; font-size: 32px;">{% load static %}<a href="{{report.path}}" ><i class="fa fa-download"></i></a></td>
                 </tr>
                 {% endfor %}
             </tbody>

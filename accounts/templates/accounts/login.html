@@ -1,0 +1,71 @@
+<html lang="en-us" class="gr__127_0_0_1"><head>
+    <title>Log in | Django site admin</title>
+    <link rel="stylesheet" type="text/css" href="/static/admin/css/base.css">
+    <link rel="stylesheet" type="text/css" href="/static/admin/css/login.css">
+        <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="/static/admin/css/responsive.css">
+        
+    
+    <meta name="robots" content="NONE,NOARCHIVE">
+    </head>
+    
+    
+    <body class=" login" data-admin-utc-offset="0" data-gr-c-s-loaded="true" cz-shortcut-listen="true">
+    
+        {% if form.errors %}
+        <p>Your username and password didn't match. Please try again.</p>
+        {% endif %}
+        
+        {% if next %}
+            {% if user.is_authenticated %}
+            <p>Your account doesn't have access to this page. To proceed,
+            please login with an account that has access.</p>
+            {% else %}
+            <p>Please login to see this page.</p>
+            {% endif %}
+        {% endif %}
+        
+        
+            <!-- Container -->
+            <div id="container">
+                
+                <!-- Header -->
+                <div id="header">
+                    <div id="branding">
+                        <h1 id="site-name"><a href="/accounts/login/">Login</a></h1>
+                    </div>
+                </div>
+                <!-- END Header -->
+        
+            <!-- Content -->
+            <div id="content" class="colM">
+                <div id="content-main">
+                    <form method="post" action="/accounts/login/" id="login-form">
+                        {% csrf_token %}
+                        <div class="form-row">
+                        
+                        <label class="required" for="id_username">Username:</label> <input type="text" name="username" required="" id="id_username" autofocus="" autocomplete="off" style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAASCAYAAABSO15qAAAAAXNSR0IArs4c6QAAAPhJREFUOBHlU70KgzAQPlMhEvoQTg6OPoOjT+JWOnRqkUKHgqWP4OQbOPokTk6OTkVULNSLVc62oJmbIdzd95NcuGjX2/3YVI/Ts+t0WLE2ut5xsQ0O+90F6UxFjAI8qNcEGONia08e6MNONYwCS7EQAizLmtGUDEzTBNd1fxsYhjEBnHPQNG3KKTYV34F8ec/zwHEciOMYyrIE3/ehKAqIoggo9inGXKmFXwbyBkmSQJqmUNe15IRhCG3byphitm1/eUzDM4qR0TTNjEixGdAnSi3keS5vSk2UDKqqgizLqB4YzvassiKhGtZ/jDMtLOnHz7TE+yf8BaDZXA509yeBAAAAAElFTkSuQmCC&quot;); background-repeat: no-repeat; background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%;">
+                    </div>
+                    <div class="form-row">
+                        <label class="required" for="id_password">Password:</label> <input type="password" name="password" required="" id="id_password" autocomplete="off" style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAASCAYAAABSO15qAAAAAXNSR0IArs4c6QAAAPhJREFUOBHlU70KgzAQPlMhEvoQTg6OPoOjT+JWOnRqkUKHgqWP4OQbOPokTk6OTkVULNSLVc62oJmbIdzd95NcuGjX2/3YVI/Ts+t0WLE2ut5xsQ0O+90F6UxFjAI8qNcEGONia08e6MNONYwCS7EQAizLmtGUDEzTBNd1fxsYhjEBnHPQNG3KKTYV34F8ec/zwHEciOMYyrIE3/ehKAqIoggo9inGXKmFXwbyBkmSQJqmUNe15IRhCG3byphitm1/eUzDM4qR0TTNjEixGdAnSi3keS5vSk2UDKqqgizLqB4YzvassiKhGtZ/jDMtLOnHz7TE+yf8BaDZXA509yeBAAAAAElFTkSuQmCC&quot;); background-repeat: no-repeat; background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%;">
+                        <input type="hidden" name="next" value="/">
+                    </div>
+                    <div class="submit-row">
+                        <label>&nbsp;</label><input type="submit" value="Log in">
+                    </div>
+                    <input type="hidden" name="next" value="{{ next }}">
+                    </form>
+            
+                </div>
+                    <br class="clear">
+                </div>
+                <!-- END Content -->
+                <div id="footer">
+                    {# Assumes you setup the password_reset view in your URLconf #}
+                    <p><a href="{% url 'password_reset' %}">Lost password?</a></p>
+                </div>
+            </div>
+            <!-- END Container -->
+        
+    <div id="mcrx-pinner-root"><div data-reactroot="" id="Pinners"><div class="PinnerButton ImagePinner" style="display: none; top: 0px; left: 0px;"><svg class="Icon MiniLogo" width="10" height="10" viewBox="0 0 10 10"><path fill="none" fill-rule="evenodd" stroke="#FFF" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.25" d="M9.375 9.375L.625.625v8.75h8.75V.625l-8.75 8.75"></path></svg><!-- react-text: 5 --> Save<!-- /react-text --></div></div></div><div id="mcrx-drawer-root"><div data-reactroot="" id="mcrx-drawer-shadow-container" class="resolved"></div></div></body></html>
+

@@ -1,0 +1,11 @@
+{% extends "monsters/base.html" %}
+{% block content %}
+<body> 
+    <form method = "post" enctype="multipart/form-data"> 
+        {% csrf_token %} 
+        {{ form.as_p }} 
+        <button type="submit">Upload</button> 
+    </form> 
+</body> 
+</html>
+{% endblock%} 

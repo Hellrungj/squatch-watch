@@ -5,10 +5,6 @@ from . import views
 urlpatterns = [
 # Standard Display     
     url(r'^$', views.index, name='index'),
-    url(r'^login/', views.login_view, name='login_view'),
-    url(r'^logout/', views.logout_view, name='logout_view'),
-    url(r'^accounts/login/', views.login_view, name='login_view'),
-    url(r'^accounts/logout/', views.logout_view, name='logout_view'),
     url(r'^report/(?P<id>\d+)/$', views.report_details, name='report_details'),
     url(r'^report/sighting/(?P<id>\d+)/$', views.sighting_details, name='sighting_details'),
     url(r'^report/upload/$', views.upload_csv, name='upload_csv'),
