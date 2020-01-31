@@ -188,20 +188,24 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4' # BootStrap Templates
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+if ENV_STAGE != "DEV":
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-STATIC_URL = '/static/'
+STATIC_URL = 'static/'
+
+os.makedirs(STATIC_URL, exist_ok=True)
 
 # Deployment use -------------------------------------------------------------
-if ENV_STAGE != "DEV":
-    STATICFILES_DIRS = (
-        os.path.join(BASE_DIR, 'static'),
-    )
 
-    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_DIRS = [
+     os.path.join(BASE_DIR, "static"), 
+]
 
 # For Monster Images 
 MEDIA_ROOT = BASE_DIR
-MEDIA_URL = '/media/'
+MEDIA_URL = 'media/'
 
 MEDIA_REPORT_URL = '/media/monsters/reports/'
 MEDIA_MONSTER_IMAGE_URL = '/media/monsters/images/'
