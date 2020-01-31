@@ -1,5 +1,16 @@
 {
     "python.linting.pylintEnabled": true,
     "python.pythonPath": "C:\\Users\\Johnh\\AppData\\Local\\Programs\\Python\\Python38-32\\python.exe",
-    "python.linting.enabled": true
+    "python.linting.enabled": true,
+    "sqltools.connections": [
+        {
+            "database": "squatch_watch_db",
+            "dialect": "PostgreSQL",
+            "name": "squatch_watch_db",
+            "password": "Squatch_Admin22!",
+            "port": 5432,
+            "server": "localhost",
+            "username": "postgres"
+        }
+    ]
 }

@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 import os
 
-import logging
 import django_heroku
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -28,10 +27,16 @@ ENV_STAGE = "DEV"
 #ENV_STAGE = "QA"
 #ENV_STAGE = "PROD"
 
+DEBUG = False
+
 if ENV_STAGE == "DEV":
     DEBUG = True
+    
 POSTGRES_DB = True
 ALLOWED_HOSTS = ['*']
+
+DEBUG_TOOLBAR_PATCH_SETTINGS = False
+INTERNAL_IPS = ['127.0.0.1',]
 
 # Application definition
 
@@ -49,6 +54,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'import_export',
     'rest_framework',
+    'debug_toolbar',
 ]
 
 MIDDLEWARE = [
@@ -59,6 +65,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     #'whitenoise.middleware.WhiteNoiseMiddleware', Deployment
 ]
 
@@ -121,6 +128,45 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+# Logging settings
+import logging
+
+LOGGING = {
+        'version': 1,
+        'formatters': {
+            'detailed': {
+                'class': 'logging.Formatter',
+                'format': '%(asctime)s %(name)-15s %(levelname)-8s %(processName)-10s %(message)s'
+            }
+        },
+        'handlers': {
+            'console': {
+                'class': 'logging.StreamHandler',
+                'level': 'INFO',
+            },
+            'development_logfile': {
+                'level': 'DEBUG',
+                'class': 'logging.FileHandler',
+                'filename': 'logs/temp/debug.log',
+                'formatter': 'detailed',
+            },
+            'production_logfile': {
+                'level': 'ERROR',
+                'class': 'logging.handlers.RotatingFileHandler',
+                'filename': 'logs/debug.log',
+                'maxBytes' : 1024*1024*100, # 100MB
+                'backupCount' : 5,
+                'formatter': 'detailed',
+            },
+        },
+         'root': {
+             'level': 'DEBUG',
+             'handlers': ['console','development_logfile','production_logfile'],
+         },
+    }
+
+logging.config.dictConfig(LOGGING)
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/

@@ -18,7 +18,7 @@ psycopg2 = "*"
 djangorestframework = "*"
 markdown = "*"
 django-filter = "*"
-django-utils-six = "*"
+django-debug-toolbar = "*"
 
 [requires]
 python_version = "*"

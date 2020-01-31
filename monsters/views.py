@@ -15,6 +15,7 @@ import csv
 import logging
 
 logger = logging.getLogger(__name__)
+djangologger = logging.getLogger('django')
 
 # Import models
 from .models import Researcher
