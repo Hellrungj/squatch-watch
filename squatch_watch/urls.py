@@ -26,10 +26,11 @@ urlpatterns = [
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.BASE_ROOT)
 urlpatterns += static(settings.MEDIA_REPORT_URL, document_root=settings.MEDIA_ROOT)
 urlpatterns += static(settings.MEDIA_MONSTER_IMAGE_URL, document_root=settings.MEDIA_ROOT)
 urlpatterns += static(settings.MEDIA_ACCOUNT_IMAGE_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns += static(settings.EMAIL_URL, document_root=settings.EMAIL_ROOT)
 urlpatterns += static(settings.EMAIL_URL, document_root=settings.EMAIL_ROOT)
 
 if settings.DEBUG:
