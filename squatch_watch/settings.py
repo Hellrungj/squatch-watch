@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 import os
 
-import logging
 import django_heroku
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -131,78 +130,43 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 # Logging settings
+import logging
+
 LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': True,
-    'filters': {
-        'require_debug_false': {
-            '()': 'django.utils.log.RequireDebugFalse',
+        'version': 1,
+        'formatters': {
+            'detailed': {
+                'class': 'logging.Formatter',
+                'format': '%(asctime)s %(name)-15s %(levelname)-8s %(processName)-10s %(message)s'
+            }
         },
-        'require_debug_true': {
-            '()': 'django.utils.log.RequireDebugTrue',
+        'handlers': {
+            'console': {
+                'class': 'logging.StreamHandler',
+                'level': 'INFO',
+            },
+            'development_logfile': {
+                'level': 'DEBUG',
+                'class': 'logging.FileHandler',
+                'filename': 'logs/temp/debug.log',
+                'formatter': 'detailed',
+            },
+            'production_logfile': {
+                'level': 'ERROR',
+                'class': 'logging.handlers.RotatingFileHandler',
+                'filename': 'logs/debug.log',
+                'maxBytes' : 1024*1024*100, # 100MB
+                'backupCount' : 5,
+                'formatter': 'detailed',
+            },
         },
-    },
-    'formatters': {
-        'simple': {
-            'format': '[%(asctime)s] %(levelname)s %(message)s',
-            'datefmt': '%Y-%m-%d %H:%M:%S'
-        },
-        'verbose': {
-            'format': '[%(asctime)s] %(levelname)s [%(name)s.%(funcName)s:%(lineno)d] %(message)s',
-            'datefmt': '%Y-%m-%d %H:%M:%S'
-        },
-    },
-    'handlers': {
-        'console': {
-            'level': 'INFO',
-            'filters': ['require_debug_true'],
-            'class': 'logging.StreamHandler',
-        },
-        'null': {
-            'class': 'logging.NullHandler',
-        },
-        # Mine own result
-        'console': {
-            'level': 'DEBUG',
-            'filters': ['require_debug_true'],
-            'class': 'logging.StreamHandler',
-            'formatter': 'simple'
-        },
-        'development_logfile': {
-            'level': 'DEBUG',
-            'filters': ['require_debug_true'],
-            'class': 'logging.FileHandler',
-            'filename': '/temp/django_dev.log',
-            'formatter': 'verbose'
-        },
-        'mail_admins': {
-            'level': 'ERROR',
-            'filters': ['require_debug_false'],
-            'class': 'django.utils.log.AdminEmailHandler'
-        }
-    },
-    'loggers': {
-        #'django': {
-        #    'handlers': ['console'],
-        #},
-        'django': {
-            'handlers': ['development_logfile'],
-        },
-        'django.request': {
-            'handlers': ['mail_admins'],
-            'level': 'ERROR',
-            'propagate': False,
-        },
-        'django.security': {
-            'handlers': ['mail_admins'],
-            'level': 'ERROR',
-            'propagate': False,
-        },
-        'py.warnings': {
-            'handlers': ['console'],
-        },
+         'root': {
+             'level': 'DEBUG',
+             'handlers': ['console','development_logfile','production_logfile'],
+         },
     }
-}
+
+logging.config.dictConfig(LOGGING)
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
