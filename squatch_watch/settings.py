@@ -32,7 +32,7 @@ DEBUG = False
 if ENV_STAGE == "DEV":
     DEBUG = True
     
-POSTGRES_DB = True
+POSTGRES_DB = False
 ALLOWED_HOSTS = ['*']
 
 DEBUG_TOOLBAR_PATCH_SETTINGS = False
@@ -188,6 +188,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4' # BootStrap Templates
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 if ENV_STAGE != "DEV":
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
