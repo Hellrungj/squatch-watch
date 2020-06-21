@@ -1,15 +1,15 @@
-from monsters.models import MonsterReport, Sighting, Researcher, Monster
+from monsters.models import MonsterReport, Sighting, Researcher, Monster, Monster_Image
 from rest_framework import serializers
 
 class MonsterReportSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = MonsterReport
-        fields = ['title','filename','path','sighting','user']
+        fields = ['title','description','report','sighting']
 
 class SightingSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Sighting
-        fields = ['title','researcher','monster','timestamp','latitude','longitude']
+        fields = ['title','description','sighted','researcher','monster']
         
 
 class ResearcherSerializer(serializers.HyperlinkedModelSerializer):
@@ -20,4 +20,9 @@ class ResearcherSerializer(serializers.HyperlinkedModelSerializer):
 class MonsterSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Monster
-        fields = ['name']
+        fields = ['name','description','height','width','weight','images']
+
+class Monster_ImageSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Monster_Image
+        fields = ['title','image']

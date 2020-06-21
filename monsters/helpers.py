@@ -18,6 +18,9 @@ from .models import MonsterReport
 def csv_uploader(myfile):
     logging.info("File: {file} ".format(file=myfile))
     # File upload #
+    
+    return("Ran csv_uploader")
+    
     fs = FileSystemStorage()
 
     filename = fs.save(myfile.name, myfile) #Save the file to the file system in the media folder in the monster app

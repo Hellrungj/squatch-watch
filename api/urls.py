@@ -10,6 +10,7 @@ router.register(r'monster_report', views.MonsterReportViewSet)
 router.register(r'sighting', views.SightingViewSet)
 router.register(r'researcher', views.ResearcherViewSet)
 router.register(r'monster', views.MonsterViewSet)
+router.register(r'monster_image', views.Monster_ImageViewSet)
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
