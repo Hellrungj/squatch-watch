@@ -1,8 +1,6 @@
-from monsters.models import MonsterReport, Sighting, Researcher, Monster
+from monsters.models import MonsterReport, Sighting, Researcher, Monster, Monster_Image
 from rest_framework import viewsets
-from api.serializers import MonsterReportSerializer, SightingSerializer, ResearcherSerializer, MonsterSerializer
-
-# TODO: Add fix to MonsterReportViewSet and SightingViewSet
+from api.serializers import MonsterReportSerializer, SightingSerializer, ResearcherSerializer, MonsterSerializer, Monster_ImageSerializer
 
 class MonsterReportViewSet(viewsets.ModelViewSet):
     """
@@ -31,3 +29,10 @@ class MonsterViewSet(viewsets.ModelViewSet):
     """
     queryset = Monster.objects.all()
     serializer_class = MonsterSerializer
+
+class Monster_ImageViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows users to be viewed or edited.
+    """
+    queryset = Monster_Image.objects.all()
+    serializer_class = Monster_ImageSerializer

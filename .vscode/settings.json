@@ -1,6 +1,6 @@
 {
     "python.linting.pylintEnabled": true,
-    "python.pythonPath": "C:\\Users\\Johnh\\AppData\\Local\\Programs\\Python\\Python38-32\\python.exe",
+    "python.pythonPath": "/home/hellrungj/.local/share/virtualenvs/squatch-watch-bCbULJF7/bin/python",
     "python.linting.enabled": true,
     "sqltools.connections": [
         {

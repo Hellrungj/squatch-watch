@@ -1,4 +1,5 @@
 # pylint: disable=no-member
+# TODO: Clean up this and migrate some the code to another file
 
 from django.shortcuts import render, reverse, redirect
 from django.http import HttpResponse, HttpResponseRedirect
@@ -8,6 +9,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.db.models import Count
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.utils.html import strip_tags
 
 import logging
 
@@ -21,57 +23,36 @@ from .models import Sighting
 from .models import MonsterReport    
 
 # Helper Function
-from .helpers import csv_uploader 
+from .helpers import csv_uploader
+
+# Table
+from .tables import GetAllMonsterReports, \
+                    GetTotalNumberOfReports, \
+                    IndexQuery
 
 # The General Views ('/':index.html, 
 #                    '/report/<id>':report_details.html,
 #                    '/report/sighting/<id>':sighting_details.html)
+# def index(request):
+#     reports_list = GetAllMonsterReports()
+#     report_num = GetTotalNumberOfReports()
+#     data = {
+#         "report_list": reports_list,
+#         "report_num": report_num,
+#         "user": request.user
+#     }
+#     return render(request, 'monsters/index.html', data)
+
 def index(request):
     """
     Displays the all MonsterReport on the index page
     """
-    reports = MonsterReport.objects.all()
-    logging.debug("Grabed all reports: {report_list}".format(report_list=str(reports)))
-    reports_list = []
-    
-    report_counter = 0
-    for report in reports.all(): #Grabs each report
-        logging.debug("Grabed selected reports: {report_list}".format(report_list=str(report)))
-        researchers_list, monsters_list = [], []
-        researchers_dic, monsters_dic = {}, {}
-        counter = 0
-        
-        for sight in report.sighting.all(): #Grabs each sighting for each report
-            logging.debug("Grabed selected sightings by report: {sighting_list}".format(sighting_list=str(sight)))
-            researchers_dic[sight.title] = [researcher.name for researcher in sight.researcher.all()] #Grabs each researcher in the sighting
-            logging.debug("Grabed the titles of the selected resarchers: {researchers_dic}".format(researchers_dic=str(researchers_dic))) 
-            monsters_dic[sight.title] = [monster.name for monster in sight.monster.all()] #Grabs each monster in the sighting
-            logging.debug("Grabed the titles of the selected monsters: {monsters_dic}".format(monsters_dic=str(monsters_dic))) 
-            researchers_list.append(' '.join(researchers_dic[sight.title])) #Change the dictionary into a string
-            logging.debug("Change the dictionary into a string") 
-            monsters_list.append(' '.join(monsters_dic[sight.title])) #Change the dictionary into a string
-            logging.debug("Change the dictionary into a string") 
-
-            counter = counter + 1        
-
-            # Put a dictationary into a list to be used in the view
-        report_counter = report_counter + 1
-        reports_list.append({ 
-                "id" : report.id,
-                "title" : report.title,
-                "filename" : report.filename,
-                "path" : report.path,
-                "researchers" : set(researchers_list),
-                "monsters" : set(monsters_list),
-                "sigthinglen" : counter 
-            })
-    logging.debug("Collect the selected report data into a dictionary for the view") 
+    # TODO: Fix image download link
     context = {
-        "reports": reports_list,
-        "report_num": report_counter,
+        "reports": IndexQuery()["reports"],
+        "report_num": IndexQuery()["report_num"],
         "user": request.user
     }
-
     return render(request, 'monsters/index.html', context)
 
 def report_details(request, id):

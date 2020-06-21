@@ -201,12 +201,13 @@ os.makedirs(STATIC_URL, exist_ok=True)
 # Deployment use -------------------------------------------------------------
 
 STATICFILES_DIRS = [
-     os.path.join(BASE_DIR, "static"), 
+    os.path.join(BASE_DIR, "static"),
+    #'/var/www/static/', 
 ]
 
 # For Monster Images 
 MEDIA_ROOT = BASE_DIR
-MEDIA_URL = 'media/'
+MEDIA_URL = '/media/'
 
 MEDIA_REPORT_URL = '/media/monsters/reports/'
 MEDIA_MONSTER_IMAGE_URL = '/media/monsters/images/'
